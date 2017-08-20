@@ -1,0 +1,30 @@
+\RequirePackage{minted}
+\newcommand{\ipynb}[3]{
+    \begin{figure}
+        \ifincludecode
+            \inputminted[
+                breaklines,
+                frame=single,
+                framesep=4mm,
+                breakanywhere=false,
+                fontsize=\footnotesize,
+                bgcolor=white,  % keeps the boxes from splitting across pages
+            ]{python}{../.cells/#1-cells/#1.tag.#2.source}
+            \ifx #3t
+                \vspace{-1.5cm}
+                \inputminted[
+                    breaklines,
+                    frame=single,
+                    framesep=4mm,
+                    breakanywhere=false,
+                    fontsize=\footnotesize,
+                    bgcolor=white,  % keeps the boxes from splitting across pages
+                ]{python}{../.cells/#1-cells/#1.tag.#2.output}
+            \fi
+        \else
+            \centering
+            Code snippet
+        \fi
+        \caption{#1 #2}
+    \end{figure}
+}
