@@ -1,5 +1,8 @@
 import export_cells
 import logging
+import tempfile
+import os
+
 
 def test_load_ipynb_correctly():
     """Check the parsing works"""
@@ -12,4 +15,23 @@ def test_load_ipynb_correctly():
     assert parsed_source['tag1'][3] == u'    print i'
     logging.fatal(parsed_source['tag2'])
     assert parsed_source['tag2'][0] == u"print 'b'"
+
+
+def test_files_exported():
+    tempdir = tempfile.mkdtemp()
+
+    assert not os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag1.source'))
+    assert not os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag1.output'))
+    assert not os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag2.source'))
+    assert not os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag2.output'))
+    assert not os.path.exists(os.path.join(tempdir, 'src', 'notebook', '.cells', 'notebook', 'tag1.source'))
+
+    export_cells.extract_cells('notebook.ipynb', tempdir)
+    export_cells.extract_cells('src/notebook.ipynb', tempdir)
+
+    assert os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag1.source'))
+    assert os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag1.output'))
+    assert os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag2.source'))
+    assert os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag2.output'))
+    assert os.path.exists(os.path.join(tempdir, 'src', 'notebook', '.cells', 'notebook', 'tag1.source'))
 
