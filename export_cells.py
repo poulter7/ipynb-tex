@@ -43,7 +43,7 @@ def save_ipynb_cells(cell_sources, cell_outputs, output_dir):
     except Exception, e:
         logging.fatal(e)
     for category, contents in zip(['source', 'output'], [cell_sources, cell_outputs]):
-        for tag, value in cell_sources.items():
+        for tag, value in contents.items():
             path = os.path.join(output_dir, '{0}.{1}'.format(tag, category))
             logging.info("Exporting to {0}".format(path))
             with open(path, 'w') as f:

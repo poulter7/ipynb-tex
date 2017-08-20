@@ -2,3 +2,7 @@
 .idea/
 .ipynb_checkpoints/
 *.pyc
+*.aux
+*.dvi
+*.log
+_minted-document/
