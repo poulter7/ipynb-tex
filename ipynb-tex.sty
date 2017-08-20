@@ -19,13 +19,12 @@
         bgcolor=white,  % keeps the boxes from splitting across pages
     ]{python}{.cells/#1/#2.output}
 }
-\newcommand{\ipynb}[3]{
-    \begin{figure}
-        \ipynbsource{#1}{#2}
-            \ifx #3t
-                \vspace{-1.5cm}
-                \ipynboutput{#1}{#2}
-            \fi
-        \caption{#1 #2}
-    \end{figure}
+\newcommand{\ipynb}[2]{
+    \ipynbsource{#1}{#2}
+    \ipynboutput{#1}{#2}
+}
+\newcommand{\ipynbinclude}{
+   \begin{python}
+        print 'a'
+   \end{python} 
 }
