@@ -15,18 +15,18 @@ def parse_ipynb(ipynb_json):
             # for each cell, for each tag the cell has
 
             logging.warn("Processing src tag {0}".format(tag))
-            source[tag].extend(cell['source'])
+            source[tag].extend(map(unicode.rstrip, cell['source']))
             cell_outputs = cell.get('outputs')
             if cell_outputs:
                 logging.warn("Processing output tag {0}".format(tag))
                 for cell_output in cell_outputs:
                     output_type = cell_output.get('output_type')
                     if output_type == 'stream':
-                        output[tag].extend(cell_output['text'])
+                        output[tag].extend(map(unicode.rstrip, cell_output['text']))
                     elif output_type == 'execute_result':
                         for datatype, value in cell_output['data'].items():
                             if datatype == 'text/plain':
-                                output[tag].extend(value)
+                                output[tag].extend(value.rstrip())
                             else:
                                 logging.warn("Unable to process datatype {0}".format(datatype))
                     else:
@@ -41,7 +41,7 @@ def save_ipynb_cells(cell_sources, cell_outputs, output_dir):
             path = os.path.join(output_dir, '{0}.{1}'.format(tag, category))
             logging.warn("Exporting to {0}".format(path))
             with open(path, 'w') as f:
-                f.write("".join(value))
+                f.write("\n".join(value))
 
 
 def load_ipynb(path):

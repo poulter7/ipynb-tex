@@ -1,2 +1,4 @@
-.cells
-.idea
+.cells/
+.idea/
+.ipynb_checkpoints/
+*.pyc
