@@ -26,7 +26,7 @@ def parse_ipynb(ipynb_json):
                     elif output_type == 'execute_result':
                         for datatype, value in cell_output['data'].items():
                             if datatype == 'text/plain':
-                                output[tag].extend(value.rstrip())
+                                output[tag].extend(map(unicode.rstrip, value))
                             else:
                                 logging.warn("Unable to process datatype {0}".format(datatype))
                     else:

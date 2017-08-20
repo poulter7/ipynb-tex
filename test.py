@@ -9,12 +9,12 @@ def test_load_ipynb_correctly():
     nb = export_cells.load_ipynb('notebook.ipynb')
     parsed_source, parsed_output = export_cells.parse_ipynb(nb)
 
-    assert parsed_source['tag1'][0] == u'for i in range(10):'
+    assert parsed_source['tag1'][0] == u'for i in range(3):'
     assert parsed_source['tag1'][1] == u'    print i'
-    assert parsed_source['tag1'][2] == u'for i in range(10, 20):'
+    assert parsed_source['tag1'][2] == u'for i in range(3, 6):'
     assert parsed_source['tag1'][3] == u'    print i'
-    logging.fatal(parsed_source['tag2'])
-    assert parsed_source['tag2'][0] == u"print 'b'"
+    assert parsed_source['tag2'][0] == u"print 'a'"
+    logging.fatal(parsed_source['tag3'])
 
 
 def test_files_exported():
