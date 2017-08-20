@@ -5,24 +5,10 @@
 \RequirePackage[rerun=always]{pythontex}
 
 \providecommand{\ipynbsource}[2]{
-    \inputminted[
-        breaklines,
-        frame=single,
-        framesep=4mm,
-        breakanywhere=false,
-        fontsize=\footnotesize,
-        bgcolor=white,  % keeps the boxes from splitting across pages
-    ]{python}{.cells/#1/#2.source}
+    \inputpygments{python}{./.cells/#1/#2.source}
 }
 \providecommand{\ipynboutput}[2]{
-    \inputminted[
-        breaklines,
-        frame=single,
-        framesep=4mm,
-        breakanywhere=false,
-        fontsize=\footnotesize,
-        bgcolor=white,  % keeps the boxes from splitting across pages
-    ]{python}{.cells/#1/#2.output}
+    \inputpygments{python}{./.cells/#1/#2.output}
 }
 \providecommand{\ipynb}[2]{
     \ipynbsource{#1}{#2}
