@@ -1,5 +1,10 @@
+\NeedsTeXFormat{LaTeX2e}[1994/12/01]
+\ProvidesPackage{ipynb-tex}[2017/08/21 v0.1 ipynb in LaTeX]
+
 \RequirePackage{minted}
-\newcommand{\ipynbsource}[2]{
+\RequirePackage[rerun=always]{pythontex}
+
+\providecommand{\ipynbsource}[2]{
     \inputminted[
         breaklines,
         frame=single,
@@ -9,7 +14,7 @@
         bgcolor=white,  % keeps the boxes from splitting across pages
     ]{python}{.cells/#1/#2.source}
 }
-\newcommand{\ipynboutput}[2]{
+\providecommand{\ipynboutput}[2]{
     \inputminted[
         breaklines,
         frame=single,
@@ -19,10 +24,11 @@
         bgcolor=white,  % keeps the boxes from splitting across pages
     ]{python}{.cells/#1/#2.output}
 }
-\newcommand{\ipynb}[2]{
+\providecommand{\ipynb}[2]{
     \ipynbsource{#1}{#2}
     \ipynboutput{#1}{#2}
 }
-\newcommand{\ipynbinclude}{
-    Include
+
+\providecommand{\ipynbinclude}[1]{
+    \pyc{import exportcells;exportcells.extractcells('#1.ipynb')} 
 }

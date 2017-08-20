@@ -54,7 +54,7 @@ def load_ipynb(path):
     return json.loads(open(path, "r").read())
 
 
-def extract_cells(ipynb_path, base_dir=None):
+def extractcells(ipynb_path, base_dir=None):
     ipynb_path = os.path.abspath(ipynb_path)
     sources, outputs = parse_ipynb(load_ipynb(ipynb_path))
 
@@ -76,7 +76,7 @@ def main():
     parser = OptionParser()
     parser.add_option("-f", "--file", dest="filename", )
     (options, args) = parser.parse_args()
-    extract_cells(options.filename or args[0])
+    extractcells(options.filename or args[0])
 
 
 if __name__ == '__main__':

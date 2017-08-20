@@ -6,3 +6,7 @@
 *.dvi
 *.log
 _minted-document/
+pythontex-files*/
+*.err
+*.out
+*.pytxcode

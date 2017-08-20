@@ -1,36 +1,45 @@
 \documentclass[11pt]{memoir}
 \usepackage{ipynb-tex}
-% \ipynbinclude{notebook}
-\begin{document}
-Jupyter notebook's pdf export feature is not as rich as necessary in some cases, particularly with regards to maths exports etc. however it is common to want to include notebook source and output into a LaTeX document.
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
 
-In that case working from LaTeX and importing individual notebook cells is most effective and provides the nicest resulting document. To that end \verb|ipynb-tex| provides new TeX commands to include cells directly from notebooks.
-
-Usage is as follows:
-\begin{verbatim}
-\documentclass{document}
-% include the package
-\usepackage{ipynb-tex}
-
-% extract cells from the document
 \ipynbinclude{notebook}
-
 \begin{document}
-    % include specific tagged cells
-    \ipynbsouce{notebook}{tag1}
+\ipynbsource{notebook}{tag1}
 \end{document}
-\end{verbatim}
+% Jupyter notebook's pdf export feature is not as rich as necessary in some cases, particularly with regards to maths exports etc. however it is common to want to include notebook source and output into a LaTeX document.
+
+% In that case working from LaTeX and importing individual notebook cells is most effective and provides the nicest resulting document. To that end \verb|ipynb-tex| provides new TeX commands to include cells directly from notebooks.
+
+% \section{Compiling}
+% As this extension makes use of the Python\TeX extension written by Geoffrey M. Poore the necessary compilation approach is the same.
 
 
-Including the source for a notebook with a particular name, we choose output for all cells with the tag ``tag1''
-\begin{verbatim}
-\ipynbsource{notebook}{tag1}
-\end{verbatim}
-\ipynbsource{notebook}{tag1}
-Including the output for a notebook with a particular name, we choose output for all cells with the tag ``tag1''.
-\begin{verbatim}
-\ipynboutput{notebook}{tag1}
-\end{verbatim}
-\ipynboutput{notebook}{tag1}
-\ipynb{notebook}{tag2}
-\end{document}
+% Usage is as follows:
+% \begin{verbatim}
+% \documentclass{document}
+% % include the package
+% \usepackage{ipynb-tex}
+
+% % extract cells from the document
+% \ipynbinclude{notebook}
+
+% \begin{document}
+%     % include specific tagged cells
+%     \ipynbsouce{notebook}{tag1}
+% \end{document}
+% \end{verbatim}
+
+
+% Including the source for a notebook with a particular name, we choose output for all cells with the tag ``tag1''
+% \begin{verbatim}
+% \ipynbsource{notebook}{tag1}
+% \end{verbatim}
+% \ipynbsource{notebook}{tag1}
+% Including the output for a notebook with a particular name, we choose output for all cells with the tag ``tag1''.
+% \begin{verbatim}
+% \ipynboutput{notebook}{tag1}
+% \end{verbatim}
+% \ipynboutput{notebook}{tag1}
+% \ipynb{notebook}{tag2}
+% \end{document}

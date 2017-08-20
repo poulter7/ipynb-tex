@@ -1,4 +1,4 @@
-import export_cells
+import exportcells
 import logging
 import tempfile
 import os
@@ -6,8 +6,8 @@ import os
 
 def test_load_ipynb_correctly():
     """Check the parsing works"""
-    nb = export_cells.load_ipynb('notebook.ipynb')
-    parsed_source, parsed_output = export_cells.parse_ipynb(nb)
+    nb = exportcells.load_ipynb('notebook.ipynb')
+    parsed_source, parsed_output = exportcells.parse_ipynb(nb)
 
     assert parsed_source['tag1'][0] == u'for i in range(3):'
     assert parsed_source['tag1'][1] == u'    print i'
@@ -26,8 +26,8 @@ def test_files_exported():
     assert not os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag2.output'))
     assert not os.path.exists(os.path.join(tempdir, 'src', 'notebook', '.cells', 'notebook', 'tag1.source'))
 
-    export_cells.extract_cells('notebook.ipynb', tempdir)
-    export_cells.extract_cells('src/notebook.ipynb', tempdir)
+    exportcells.extract_cells('notebook.ipynb', tempdir)
+    exportcells.extract_cells('src/notebook.ipynb', tempdir)
 
     assert os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag1.source'))
     assert os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag1.output'))
