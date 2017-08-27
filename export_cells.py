@@ -37,10 +37,10 @@ def parse_ipynb(ipynb_json):
 def save_ipynb_cells(cell_sources, cell_outputs, output_dir):
     try:
         os.makedirs(os.path.join(output_dir))
-    except os.error, e:
+    except os.error as e:
         pass
-    except Exception, e:
-        logging.fatal(e)
+    except Exception as e:
+        pass
     for category, contents in zip(['source', 'output'], [cell_sources, cell_outputs]):
         for tag, value in contents.items():
             path = os.path.join(output_dir, '{0}.{1}'.format(tag, category))
@@ -64,8 +64,6 @@ def extract_cells(ipynb_path, base_dir=None):
         output_dir = ipynb_dirname
     else:
         output_dir = os.path.normcase(os.path.join(base_dir, os.path.relpath(ipynb_path.replace('.ipynb', ''))))
-
-    logging.warning(ipynb_dirname)
 
     output_dir = os.path.join(output_dir, '.cells', ipynb_filename.replace('.ipynb', ''))
     save_ipynb_cells(sources, outputs, output_dir)
