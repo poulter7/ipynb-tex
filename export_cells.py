@@ -1,3 +1,4 @@
+#!/usr/local/bin/python
 import collections
 from optparse import OptionParser
 import logging
@@ -68,15 +69,3 @@ def extract_cells(ipynb_path, base_dir=None):
 
     output_dir = os.path.join(output_dir, '.cells', ipynb_filename.replace('.ipynb', ''))
     save_ipynb_cells(sources, outputs, output_dir)
-
-
-def main():
-    parser = OptionParser()
-    parser.add_option("-f", "--file", dest="filename", )
-    (options, args) = parser.parse_args()
-    extract_cells(options.filename or args[0])
-
-
-if __name__ == '__main__':
-    main()
-
