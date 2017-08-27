@@ -14,5 +14,9 @@
 }
 
 \providecommand{\ipynbinclude}[1]{
-    \pyc{#input#;extract_cells('#1.ipynb')}
+    \pyc{extract_cells('#1.ipynb')}
 }
+
+\begin{pycode}
+#input#
+\end{pycode}
