@@ -1,4 +1,3 @@
-@@ -1,47 +0,0 @@
 # ipynb-tex.sty
 
 ipynb-tex is a simple style sheet which allows you to extract tagged cells out of an Jupyter notebook and include them in a .tex document
