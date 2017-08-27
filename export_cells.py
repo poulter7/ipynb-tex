@@ -1,4 +1,3 @@
-#!/usr/local/bin/python
 import collections
 from optparse import OptionParser
 import logging
@@ -12,7 +11,6 @@ def parse_ipynb(ipynb_json):
 
     for cell in ipynb_json['cells']:
         for tag in cell['metadata'].get('tags', []):
-            # for each cell, for each tag the cell has
 
             logging.info("Processing src tag {0}".format(tag))
             source[tag].extend(map(unicode.rstrip, cell['source']))
@@ -54,7 +52,7 @@ def load_ipynb(path):
     return json.loads(open(path, "r").read())
 
 
-def extractcells(ipynb_path, base_dir=None):
+def extract_cells(ipynb_path, base_dir=None):
     ipynb_path = os.path.abspath(ipynb_path)
     sources, outputs = parse_ipynb(load_ipynb(ipynb_path))
 
@@ -76,7 +74,7 @@ def main():
     parser = OptionParser()
     parser.add_option("-f", "--file", dest="filename", )
     (options, args) = parser.parse_args()
-    extractcells(options.filename or args[0])
+    extract_cells(options.filename or args[0])
 
 
 if __name__ == '__main__':
