@@ -2,11 +2,19 @@
 \ProvidesPackage{ipynb-tex}[2017/08/21 v0.1 ipynb in LaTeX]
 
 \RequirePackage[rerun=always]{pythontex}
+\RequirePackage{graphicx}
 \providecommand{\ipynbsource}[2]{
     \inputpygments{python}{./.cells/#1/#2.source}
 }
 \providecommand{\ipynboutput}[2]{
     \inputpygments{python}{./.cells/#1/#2.output}
+}
+\providecommand{\ipynbimage}[2]{
+    \IfFileExists{./.cells/#1/#2.png}{\includegraphics[width=\linewidth]{./.cells/#1/#2.png}}{./.cells/#1/#2.png}
+    
+}
+\providecommand{\ipynbtex}[2]{
+    \IfFileExists{./.cells/#1/#2.tex}{\input{./.cells/#1/#2.tex}}{./.cells/#1/#2.tex}
 }
 %\providecommand{\ipynbsourceinline}[2]{
 %    \pygment{python}{./.cells/#1/#2.source}
