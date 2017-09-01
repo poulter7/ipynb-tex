@@ -8,7 +8,7 @@ cycler==0.10.0
 decorator==4.1.2
 entrypoints==0.2.3
 enum34==1.1.6
-functools32==3.2.3.post2;python_version>"2.7"
+functools32==3.2.3.post2;python_version<"2.7"
 html5lib==0.999999999
 ipykernel==4.6.1
 ipython==5.4.1
@@ -45,7 +45,7 @@ scandir==1.5
 simplegeneric==0.8.1
 singledispatch==3.4.0.3
 six==1.10.0
-subprocess32==3.2.7;python_version>"2.7"
+subprocess32==3.2.7;python_version<"2.7"
 terminado==0.6
 testpath==0.3.1
 tornado==4.5.2
