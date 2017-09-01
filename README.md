@@ -47,3 +47,6 @@ This repo comes with a ready to go version of `ipynb-tex.sty`, but if you want t
 
     pip install nose
     nosetests
+
+### Todo 
+- Remove the need to "rerun=always", by registering the [filename].ipynb as a dependency while pythontex is running.
