@@ -1,10 +1,14 @@
 #!/usr/local/bin/python
+from __future__ import print_function
+from builtins import zip
+from builtins import map
 import collections
 from optparse import OptionParser
 import logging
 import os
 import json
 import base64
+import string
 
 
 def parse_ipynb(ipynb_json):
@@ -17,24 +21,24 @@ def parse_ipynb(ipynb_json):
         for tag in cell['metadata'].get('tags', []):
 
             logging.info("Processing src tag {0}".format(tag))
-            source[tag].extend(map(unicode.rstrip, cell['source']))
+            source[tag].extend([v.rstrip() for v in cell['source']])
             cell_outputs = cell.get('outputs')
             if cell_outputs:
                 logging.info("Processing output tag {0}".format(tag))
                 for cell_output in cell_outputs:
                     output_type = cell_output.get('output_type')
                     if output_type == 'stream':
-                        output[tag].extend(map(unicode.rstrip, cell_output['text']))
+                        output[tag].extend([v.rstrip() for v in cell_output['text']])
                     elif output_type == 'display_data':
                         string_rep = cell_output['data']['image/png']
                         image = base64.b64decode(string_rep)
                         images[tag].append(image)
                     elif output_type == 'execute_result':
-                        for datatype, value in cell_output['data'].items():
+                        for datatype, value in list(cell_output['data'].items()):
                             if datatype == 'text/plain':
-                                output[tag].extend(map(unicode.rstrip, value))
+                                output[tag].extend([v.rstrip() for v in value])
                             elif datatype == 'text/latex':
-                                latex[tag].extend(map(unicode.rstrip, value))
+                                latex[tag].extend([v.rstrip() for v in value])
                             else:
                                 logging.warn("Unable to process datatype {0}".format(datatype))
                     else:
@@ -51,7 +55,7 @@ def save_ipynb_cells(cell_sources, cell_outputs, cell_images, cell_latex, output
     except Exception as e:
         pass
     for category, contents in zip(['source', 'output'], [cell_sources, cell_outputs]):
-        for tag, value in contents.items():
+        for tag, value in list(contents.items()):
             path = os.path.join(output_dir, '{0}.{1}'.format(tag, category))
             logging.info("Exporting to {0}".format(path))
             with open(path, 'w') as f:
@@ -59,12 +63,12 @@ def save_ipynb_cells(cell_sources, cell_outputs, cell_images, cell_latex, output
                     f.write("\n".join(value))
                 except:
                     pass
-    for tag, images in cell_images.items():
+    for tag, images in list(cell_images.items()):
         for image in images:
             path = os.path.join(output_dir, '{0}.{1}'.format(tag, 'png'))
             with open(path, 'wb') as f:
                 f.write(image)
-    for tag, latexs in cell_latex.items():
+    for tag, latexs in list(cell_latex.items()):
         for latex in latexs:
             path = os.path.join(output_dir, '{0}.{1}'.format(tag, 'tex'))
             with open(path, 'w') as f:
@@ -87,5 +91,7 @@ def extract_cells(ipynb_path, base_dir=None):
     else:
         output_dir = os.path.normcase(os.path.join(base_dir, os.path.relpath(ipynb_path.replace('.ipynb', ''))))
 
-    output_dir = os.path.join(output_dir, '.cells', ipynb_filename.replace('.ipynb', ''))
-    save_ipynb_cells(sources, outputs, images, latex, output_dir)
+    cells_output_dir = os.path.join(output_dir, '.cells', ipynb_filename.replace('.ipynb', ''))
+    save_ipynb_cells(sources, outputs, images, latex, cells_output_dir)
+
+print ('')
