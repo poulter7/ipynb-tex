@@ -2,9 +2,8 @@
 
 ipynb-tex is a simple style sheet which allows you to extract tagged cells out of a Jupyter notebook and include them in a TeX document
 
-Writing large documents in Jupyter's notebook is not practical for a range of reasons and copying code in and out of notebooks directly into TeX files isn't great... 
-
-It would be much better to directly grab up-to-date source (and output!) from your notebook and include it directly into your TeX files.
+It isn't nice to save source or cell outputs from notebooks in separate files, these become out of sync with the notebook.
+ipynb-tex inserts latest source and cell outputs from your notebooks directly into TeX files.
 
 ![usage gif](doc/640_low.gif)
 
