@@ -6,7 +6,7 @@ import os
 
 def test_load_ipynb_correctly():
     """Check the parsing works"""
-    nb = export_cells.load_ipynb('notebook.ipynb')
+    nb = export_cells.load_ipynb('sample/notebook.ipynb')
     parsed_source, parsed_output, parsed_images, parsed_latex = export_cells.parse_ipynb(nb)
 
     assert parsed_source['tag1'][0] == u'for i in range(3):'
@@ -21,31 +21,31 @@ def test_load_ipynb_correctly():
 def test_files_exported():
     tempdir = tempfile.mkdtemp()
 
-    assert not os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag1.source'))
-    assert not os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag1.output'))
-    assert not os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag2.source'))
-    assert not os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag2.output'))
-    assert not os.path.exists(os.path.join(tempdir, 'src', 'notebook', '.cells', 'notebook', 'tag1.source'))
+    assert not os.path.exists(os.path.join(tempdir, 'sample/notebook', '.cells', 'notebook', 'tag1.source'))
+    assert not os.path.exists(os.path.join(tempdir, 'sample/notebook', '.cells', 'notebook', 'tag1.output'))
+    assert not os.path.exists(os.path.join(tempdir, 'sample/notebook', '.cells', 'notebook', 'tag2.source'))
+    assert not os.path.exists(os.path.join(tempdir, 'sample/notebook', '.cells', 'notebook', 'tag2.output'))
+    assert not os.path.exists(os.path.join(tempdir, 'sample/src', 'notebook', '.cells', 'notebook', 'tag1.source'))
 
-    export_cells.extract_cells('notebook.ipynb', tempdir)
-    export_cells.extract_cells('src/notebook.ipynb', tempdir)
+    export_cells.extract_cells('sample/notebook.ipynb', tempdir)
+    export_cells.extract_cells('sample/src/notebook.ipynb', tempdir)
 
-    assert os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag1.source'))
-    assert os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag1.output'))
-    assert os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag2.source'))
-    assert os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag2.output'))
-    assert os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'img.png'))
-    assert os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'latex.tex'))
-    assert os.path.exists(os.path.join(tempdir, 'src', 'notebook', '.cells', 'notebook', 'tag1.source'))
+    assert os.path.exists(os.path.join(tempdir, 'sample/notebook', '.cells', 'notebook', 'tag1.source'))
+    assert os.path.exists(os.path.join(tempdir, 'sample/notebook', '.cells', 'notebook', 'tag1.output'))
+    assert os.path.exists(os.path.join(tempdir, 'sample/notebook', '.cells', 'notebook', 'tag2.source'))
+    assert os.path.exists(os.path.join(tempdir, 'sample/notebook', '.cells', 'notebook', 'tag2.output'))
+    assert os.path.exists(os.path.join(tempdir, 'sample/notebook', '.cells', 'notebook', 'img.png'))
+    assert os.path.exists(os.path.join(tempdir, 'sample/notebook', '.cells', 'notebook', 'latex.tex'))
+    assert os.path.exists(os.path.join(tempdir, 'sample/src', 'notebook', '.cells', 'notebook', 'tag1.source'))
 
 def test_files_updated():
     tempdir = tempfile.mkdtemp()
-    path = os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag1.source')
-    export_cells.extract_cells('notebook.ipynb', tempdir)
+    path = os.path.join(tempdir, 'sample/notebook', '.cells', 'notebook', 'tag1.source')
+    export_cells.extract_cells('sample/notebook.ipynb', tempdir)
     time_1 = os.path.getmtime(path)
     import time
     time.sleep(1)
-    export_cells.extract_cells('notebook.ipynb', tempdir)
+    export_cells.extract_cells('sample/notebook.ipynb', tempdir)
     time_2 = os.path.getmtime(path)
     assert time_2 > time_1
 
