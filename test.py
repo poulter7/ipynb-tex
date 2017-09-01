@@ -38,3 +38,14 @@ def test_files_exported():
     assert os.path.exists(os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'latex.tex'))
     assert os.path.exists(os.path.join(tempdir, 'src', 'notebook', '.cells', 'notebook', 'tag1.source'))
 
+def test_files_updated():
+    tempdir = tempfile.mkdtemp()
+    path = os.path.join(tempdir, 'notebook', '.cells', 'notebook', 'tag1.source')
+    export_cells.extract_cells('notebook.ipynb', tempdir)
+    time_1 = os.path.getmtime(path)
+    import time
+    time.sleep(1)
+    export_cells.extract_cells('notebook.ipynb', tempdir)
+    time_2 = os.path.getmtime(path)
+    assert time_2 > time_1
+
