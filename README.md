@@ -57,4 +57,3 @@ There are no package dependencies required to run this script, but to execute th
 ### Todo 
 - Remove the need to "rerun=always", by registering the [filename].ipynb as a dependency while pythontex is running.
 - Export cells only once, by making an in-memory variable which tags a file as already processed, to avoid repeated work.
-- Include a screenshot, of two documents or a full compilation.
