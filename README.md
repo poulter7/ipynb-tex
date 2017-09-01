@@ -34,11 +34,11 @@ ipynb-tex uses PythonTeX to execute the cell extraction code. So, just as with P
 
 Toggle the toolbar UI
 
-![toggle toolbar ui](toggle_tag_toolbar.png)
+![toggle toolbar ui](doc/toggle_tag_toolbar.png)
 
 Tag a cell
 
-![tag a cell](tag_cell.png)
+![tag a cell](doc/tag_cell.png)
 
 ### Modifying this plugin
 This repo comes with a ready to go version of `ipynb-tex.sty`, but if you want to make changes and rebuild it just run `./build`, which merges `ipynb-tex-template.sty` and `extract_cells.py` to create `ipynb-tex.sty`.
