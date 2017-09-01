@@ -46,7 +46,7 @@ This repo comes with a ready to go version of `ipynb-tex.sty`, but if you want t
 
 There are no package dependencies required to run this script, but to execute the sample you'll need to include a set of dependencies.
 
-    pip install -r requirements-sample.txt
+    pip install -r requirements.txt
 
 
 ### Running Tests
