@@ -6,6 +6,7 @@ Writing large documents in Jupyter's notebook is not practical for a range of re
 
 It would be much better to directly grab up-to-date source (and output!) from your notebook and include it directly into your TeX files.
 
+![usage gif](doc/640_low.gif)
 
 ### Installation
 In your main document directory, just make a symlink to the ipynb-tex.sty file.
@@ -43,6 +44,10 @@ Tag a cell
 
 ### Modifying this plugin
 This repo comes with a ready to go version of `ipynb-tex.sty`, but if you want to make changes and rebuild it just run `./build`, which merges `ipynb-tex-template.sty` and `extract_cells.py` to create `ipynb-tex.sty`.
+
+There are no package dependencies required to run this script, but to execute the sample you'll need to include a set of dependencies.
+
+    pip install -r requirements-sample.txt
 
 
 ### Running Tests
