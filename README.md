@@ -14,7 +14,6 @@ In your main document directory, just make a symlink to the ipynb-tex.sty file.
 
 | Command                           | Description                                                                                                                 |
 |--------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
-| `\ipynbinclude{notebook}`         | Include before `\begin{document}`. Extract the tagged cells from notebook.ipynb |
 | `\ipynbsource{notebook}[tag]` | Include the source from all cells sharing the tag "example".                                                                |
 | `\ipynboutput{notebook}[tag]` | Include the output from all cells sharing the tag "example".                                                                |
 | `\ipynb{notebook}[tag]`       | Include the source and output from all cells sharing the tag "example".                                                     |
@@ -25,7 +24,7 @@ In your main document directory, just make a symlink to the ipynb-tex.sty file.
 ipynb-tex uses PythonTeX to execute the cell extraction code. So, just as with PythonTeX, you'll need to execute `pythontex` as part of your document build. Also include --shell-escape to allow external functions to be called correctly.
 
     pdflatex --shell-escape document.tex    #scan the document, figure out what Python needs to be executed
-    pythontex --rerun=always document                      #executes the Python found in the document
+    pythontex --rerun=always document       #executes the Python found in the document
     pdflatex --shell-escape document.tex    #include any valid TeX printed from the Python execution
     pdflatex --shell-escape document.tex    #ensure any included references are correctly handled
 
