@@ -1,14 +1,10 @@
 #!/usr/local/bin/python
 from __future__ import print_function
-from builtins import zip
-from builtins import map
 import collections
-from optparse import OptionParser
 import logging
 import os
 import json
 import base64
-import string
 
 
 def parse_ipynb(ipynb_json):
