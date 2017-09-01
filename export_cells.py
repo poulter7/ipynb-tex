@@ -90,4 +90,3 @@ def extract_cells(ipynb_path, base_dir=None):
     cells_output_dir = os.path.join(output_dir, '.cells', ipynb_filename.replace('.ipynb', ''))
     save_ipynb_cells(sources, outputs, images, latex, cells_output_dir)
 
-print ('')
