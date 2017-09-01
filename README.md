@@ -50,3 +50,4 @@ This repo comes with a ready to go version of `ipynb-tex.sty`, but if you want t
 
 ### Todo 
 - Remove the need to "rerun=always", by registering the [filename].ipynb as a dependency while pythontex is running.
+- Export cells only once, by making an in-memory variable which tags a file as already processed, to avoid repeated work.
