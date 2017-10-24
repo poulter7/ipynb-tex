@@ -26,9 +26,17 @@ def parse_ipynb(ipynb_json):
                     if output_type == 'stream':
                         output[tag].extend([v.rstrip() for v in cell_output['text']])
                     elif output_type == 'display_data':
-                        string_rep = cell_output['data']['image/png']
-                        image = base64.b64decode(string_rep)
-                        images[tag].append(image)
+                        for datatype, value in list(cell_output['data'].items()):
+                            if datatype == 'text/plain':
+                                output[tag].extend([v.rstrip() for v in value])
+                            elif datatype == 'text/latex':
+                                latex[tag].extend([v.rstrip() for v in value])
+                            elif datatype == 'image/png':
+                                string_rep = cell_output['data']['image/png']
+                                image = base64.b64decode(string_rep)
+                                images[tag].append(image)
+                            else:
+                                logging.warn("Unable to process datatype {0}".format(datatype))
                     elif output_type == 'execute_result':
                         for datatype, value in list(cell_output['data'].items()):
                             if datatype == 'text/plain':

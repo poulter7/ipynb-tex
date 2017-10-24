@@ -29,6 +29,10 @@
     \ipynbinclude{#1}
     \IfFileExists{./.cells/#1/#2.tex}{\input{./.cells/#1/#2.tex}}{./.cells/#1/#2.tex}
 }
+\providecommand{\ipynbrawoutput}[2]{
+    \ipynbinclude{#1}
+    \IfFileExists{./.cells/#1/#2.output}{\input{./.cells/#1/#2.output}}{./.cells/#1/#2.output}
+}
 % \providecommand{\ipynbsourceinline}[2]{
 %    \mintinline{python}{./.cells/#1/#2.source}
 % }
