@@ -10,3 +10,7 @@ pythontex-files*/
 *.err
 *.out
 *.pytxcode
+
+*.blg
+
+*.bbl
