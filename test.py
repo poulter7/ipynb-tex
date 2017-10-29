@@ -17,7 +17,6 @@ def test_files_exported():
     export_cells.extract_cells('sample/src/notebook.ipynb', tempdir)
 
     assert os.path.exists(path)
-    print (open(path).readlines())
     assert os.path.exists(os.path.join(tempdir, 'sample/notebook', '.cells', 'notebook', 'tag1.output'))
     assert os.path.exists(os.path.join(tempdir, 'sample/notebook', '.cells', 'notebook', 'tag2.source'))
     assert os.path.exists(os.path.join(tempdir, 'sample/notebook', '.cells', 'notebook', 'tag2.output'))
@@ -30,9 +29,9 @@ def test_save_multiple_outputs():
     """Appending to files if there are multiple outputs with the same tag"""
     tempdir = tempfile.mkdtemp()
     outputs = [
-        (export_cells.OutputType.OUTPUT, 'tag1', "a"+os.linesep),
-        (export_cells.OutputType.TeX, 'tag2', "b"+os.linesep),
-        (export_cells.OutputType.OUTPUT, 'tag1', "c"+os.linesep),
+        (export_cells.OutputType.OUTPUT, 'tag1', u"a" + os.linesep),
+        (export_cells.OutputType.TeX, 'tag2', u"b" + os.linesep),
+        (export_cells.OutputType.OUTPUT, 'tag1', u"c" + os.linesep),
     ]
     export_cells.save_outputs(outputs, tempdir)
     output = open(os.path.join(tempdir, 'tag1.output')).readlines()
@@ -53,4 +52,3 @@ def test_files_updated():
     time_2_img = os.path.getmtime(img_path)
     assert time_2 > time_1
     assert time_2_img > time_1_img
-

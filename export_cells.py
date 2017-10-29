@@ -1,11 +1,13 @@
 #!/usr/local/bin/python
 from __future__ import print_function
+
+import base64
+import itertools
+import json
 import logging
 import os
-import json
-import base64
 from collections import namedtuple
-import itertools
+from io import open
 
 Datatype = namedtuple('Datatype', 'extension encoding parse')
 
