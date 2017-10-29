@@ -14,6 +14,10 @@
         \inputminted{python}{./.cells/#1/#2.source}
     }{}
 }
+\providecommand{\ipynbrawsource}[2]{
+    \ipynbinclude{#1}
+    \IfFileExists{./.cells/#1/#2.source}{\input{./.cells/#1/#2.source}}{./.cells/#1/#2.source}
+}
 \providecommand{\ipynboutput}[2]{
     \ipynbinclude{#1}
     \IfFileExists{./.cells/#1/#2.output}{

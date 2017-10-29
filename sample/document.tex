@@ -1,17 +1,17 @@
-\documentclass[11pt]{memoir}
+\documentclass[11pt]{article}
 \usepackage{ipynb-tex}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\pagenumbering{gobble}
 
-\ipynbinclude{notebook}
 \begin{document}
-Jupyter notebook's pdf export feature is not as rich as necessary in some cases, particularly with regards to maths exports etc. however it is common to want to include notebook source and output into a LaTeX document.
+\noindent Jupyter notebook's pdf export feature is not as rich as necessary in some cases, particularly with regards to maths exports etc. however it is common to want to include notebook source and output into a LaTeX document.
 
 In that case working from LaTeX and importing individual notebook cells is most effective and provides the nicest resulting document. To that end \verb|ipynb-tex| provides new TeX commands to include cells directly from notebooks.
 
-\section{Compiling}
+\section*{Compiling}
 As this extension makes use of the Python\TeX extension written by Geoffrey M. Poore the necessary compilation approach is the same.
-
 
 Usage is as follows:
 \begin{verbatim}
@@ -20,30 +20,53 @@ Usage is as follows:
 \usepackage{ipynb-tex}
 
 % extract cells from the document
-\ipynbinclude{notebook}
-
 \begin{document}
-    % include specific tagged cells
-    \ipynbsouce{notebook}{tag1}
+    % include specific tagged source cells
+    \ipynbsource{notebook}{tag1}
+    % include the output from a cell
+    \ipynboutput{notebook}{tag2}
+    % include the image from a cell
+    \ipynbimage{notebook}{graph}
 \end{document}
 \end{verbatim}
 
-
-Including the source for a notebook with a particular name, we choose output for all cells with the tag ``tag1''
-\begin{verbatim}
-\ipynbsource{notebook}{tag1}
-\end{verbatim}
-\ipynbsource{notebook}{tag1}
-\ipynboutput{notebook}{tag1}
-\ipynbimage{notebook}{img}
-Including the output for a notebook with a particular name, we choose output for all cells with the tag ``tag1''.
-\begin{verbatim}
-\ipynboutput{notebook}{tag1}
-\end{verbatim}
-\ipynboutput{notebook}{tag1}
-\ipynb{notebook}{tag2}
 \clearpage
-\section*{Important Graphs}
+\section*{Examples}
+\noindent Include a graph
+\begin{verbatim}
 \ipynbimage{notebook}{graph}
+\end{verbatim}
+\ipynbimage{notebook}{graph}
+
+\noindent Include the source of a cell
+\begin{verbatim}
+\ipynbsource{notebook}{tag1}
+\end{verbatim}
+\ipynbsource{notebook}{tag1}
+\noindent Include the output of a cell
+\begin{verbatim}
+\ipynboutput{notebook}{tag1}
+\end{verbatim}
+\ipynboutput{notebook}{tag1}
+\noindent Include the source and output of a cell at the same time
+\begin{verbatim}
+\ipynb{notebook}{tag2}
+\end{verbatim}
+\ipynb{notebook}{tag2}
+\noindent Include the source of a cell from a notebook, even if has \TeX in it, using the raw variant of the source and output commands.
+\begin{verbatim}
+\ipynbrawsource{notebook}{tag2}
+\end{verbatim}
+\ipynbrawsource{notebook}{equation}
+
+\noindent Include \TeX output, such as that from sympy. \verb|ipynb-tex| can't automatically handle sympy objects at this time
+\begin{verbatim}
+\ipynbsource{notebook}{sympy}
+$$\ipynbrawoutput{notebook}{sympy}$$
+\end{verbatim}
+\ipynbsource{notebook}{sympy}
+$$\ipynbrawoutput{notebook}{sympy}$$
+
+
 
 \end{document}

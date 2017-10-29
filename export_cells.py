@@ -23,6 +23,7 @@ class OutputType(object):
     PNG = Datatype('png', 'wb', parse_image)
     OUTPUT = Datatype('output', 'w', parse_text)
     SOURCE = Datatype('source', 'w', parse_text)
+    MARKDOWN = Datatype('md', 'w', parse_text)
 
 
 def parse_ipynb(ipynb_json):
@@ -95,4 +96,6 @@ def extract_cells(ipynb_path, base_dir=None):
 
 
 def load_ipynb(ipynb_path):
-    return json.loads(open(ipynb_path, "r").read())
+    file = open(ipynb_path, 'r', encoding='utf-8')
+    raw_json = file.read()
+    return json.loads(raw_json)
