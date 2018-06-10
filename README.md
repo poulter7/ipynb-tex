@@ -58,5 +58,3 @@ There are no package dependencies required to run this script, but to execute th
 - Export cells only once, by making an in-memory variable which tags a file as already processed, to avoid repeated work.
 - Add a \ipynbdirectory which serves as the base path for all notebooks, so if you're compiling a doc with lots, no need to keep including the path
 
-### Screencap
-![usage gif](doc/640_low.gif)
