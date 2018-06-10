@@ -5,7 +5,7 @@ ipynb-tex is a simple style sheet which allows you to extract tagged cells out o
 It isn't nice to save source or cell outputs from notebooks in separate files, these become out of sync with the notebook.
 ipynb-tex inserts latest source and cell outputs from your notebooks directly into TeX files.
 
-![usage gif](doc/640_low.gif)
+![overview](doc/overview.png)
 
 ### Installation
 In your main document directory, just make a symlink to the ipynb-tex.sty file.
@@ -58,3 +58,6 @@ There are no package dependencies required to run this script, but to execute th
 - Remove the need to "rerun=always", by registering the [filename].ipynb as a dependency while pythontex is running.
 - Export cells only once, by making an in-memory variable which tags a file as already processed, to avoid repeated work.
 - Add a \ipynbdirectory which serves as the base path for all notebooks, so if you're compiling a doc with lots, no need to keep including the path
+
+### Screencap
+![usage gif](doc/640_low.gif)
