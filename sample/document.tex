@@ -15,26 +15,28 @@ As this extension makes use of the Python\TeX extension written by Geoffrey M. P
 
 Usage is as follows:
 \begin{verbatim}
-\documentclass{document}
-% include the package
-\usepackage{ipynb-tex}
+    \documentclass{document}
+    % include the package
+    \usepackage{ipynb-tex}
 
-% extract cells from the document
-\begin{document}
-    % include specific tagged source cells
-    \ipynbsource{notebook}{tag1}
-    % include the output from a cell
-    \ipynboutput{notebook}{tag2}
-    % include the image from a cell
-    \ipynbimage{notebook}{graph}
-\end{document}
+    % extract cells from the document
+    \begin{document}
+        % include specific tagged source cells
+        \ipynbsource{notebook}{tag1}
+
+        % include the output from a cell
+        \ipynboutput{notebook}{tag2}
+
+        % include the image from a cell
+        \ipynbimage{notebook}{graph}
+    \end{document}
 \end{verbatim}
 
 \clearpage
 \section*{Examples}
 \noindent Include a graph
 \begin{verbatim}
-\ipynbimage{notebook}{graph}
+    \ipynbimage{notebook}{graph}
 \end{verbatim}
 \ipynbimage{notebook}{graph}
 
@@ -43,12 +45,15 @@ Usage is as follows:
 \ipynbsource{notebook}{tag1}
 \end{verbatim}
 \ipynbsource{notebook}{tag1}
+
 \noindent Include the output of a cell
 \begin{verbatim}
 \ipynboutput{notebook}{tag1}
 \end{verbatim}
 \ipynboutput{notebook}{tag1}
+
 \noindent Include the source and output of a cell at the same time
+
 \begin{verbatim}
 \ipynb{notebook}{tag2}
 \end{verbatim}
