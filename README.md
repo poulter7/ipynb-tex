@@ -1,5 +1,4 @@
-# ipynb-tex.sty [![Build Status](https://travis-ci.com/poulter7/ipynb-tex.svg?token=id434GjPaqkWUNvK8yn2&branch=master)](https://travis-ci.com/poulter7/ipynb-tex)
-
+# ipynb-tex.sty
 ipynb-tex is a simple style sheet which allows you to extract tagged cells out of a Jupyter notebook and include them in a TeX document
 
 
