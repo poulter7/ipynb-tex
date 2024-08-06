@@ -22,13 +22,13 @@ Usage is as follows:
     % extract cells from the document
     \begin{document}
         % include specific tagged source cells
-        \ipynbsource{notebook}{tag1}
+        \ipynbsource{notebook.ipynb}{tag1}
 
         % include the output from a cell
-        \ipynboutput{notebook}{tag2}
+        \ipynboutput{notebook.ipynb}{tag2}
 
         % include the image from a cell
-        \ipynbimage{notebook}{graph}
+        \ipynbimage{notebook.ipynb}{graph}
     \end{document}
 \end{verbatim}
 
@@ -36,41 +36,41 @@ Usage is as follows:
 \section*{Examples}
 \noindent Include a graph
 \begin{verbatim}
-    \ipynbimage{notebook}{graph}
+    \ipynbimage{notebook.ipynb}{graph}
 \end{verbatim}
-\ipynbimage{notebook}{graph}
+\ipynbimage{notebook.ipynb}{graph}
 
 \noindent Include the source of a cell
 \begin{verbatim}
-\ipynbsource{notebook}{tag1}
+\ipynbsource{notebook.ipynb}{tag1}
 \end{verbatim}
-\ipynbsource{notebook}{tag1}
+\ipynbsource{notebook.ipynb}{tag1}
 
 \noindent Include the output of a cell
 \begin{verbatim}
-\ipynboutput{notebook}{tag1}
+\ipynboutput{notebook.ipynb}{tag1}
 \end{verbatim}
-\ipynboutput{notebook}{tag1}
+\ipynboutput{notebook.ipynb}{tag1}
 
 \noindent Include the source and output of a cell at the same time
 
 \begin{verbatim}
-\ipynb{notebook}{tag2}
+\ipynb{notebook.ipynb}{tag2}
 \end{verbatim}
-\ipynb{notebook}{tag2}
+\ipynb{notebook.ipynb}{tag2}
 \noindent Include the source of a cell from a notebook, even if has \TeX in it, using the raw variant of the source and output commands.
 \begin{verbatim}
-\ipynbrawsource{notebook}{tag2}
+\ipynbrawsource{notebook.ipynb}{tag2}
 \end{verbatim}
-\ipynbrawsource{notebook}{equation}
+\ipynbrawsource{notebook.ipynb}{equation}
 
 \noindent Include \TeX output, such as that from sympy. \verb|ipynb-tex| can't automatically handle sympy objects at this time
 \begin{verbatim}
-\ipynbsource{notebook}{sympy}
-$$\ipynbrawoutput{notebook}{sympy}$$
+\ipynbsource{notebook.ipynb}{sympy}
+$$\ipynbrawoutput{notebook.ipynb}{sympy}$$
 \end{verbatim}
-\ipynbsource{notebook}{sympy}
-$$\ipynbrawoutput{notebook}{sympy}$$
+\ipynbsource{notebook.ipynb}{sympy}
+$$\ipynbrawoutput{notebook.ipynb}{sympy}$$
 
 
 
