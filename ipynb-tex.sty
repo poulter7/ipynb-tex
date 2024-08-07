@@ -402,6 +402,13 @@ function ipynb.parse(file)
     return d
 end
 
+function ipynb.get_cells(file)
+    if ipynb.loaded[file] == nil then
+        ipynb.loaded[file] = ipynb.parse(file)
+    end
+    return ipynb.loaded[file].cells
+end
+
 function tableLength(t)
     local count = 0
     for _ in pairs(t) do count = count + 1 end
@@ -457,7 +464,8 @@ return ipynb
 
 \providecommand{\ipynbinclude}[1]{
     \directlua{
-        tex.print(tableLength(ipynb.parse("\luaescapestring{\unexpanded{#1}}")))
+        tex.print(tableLength(ipynb.get_cells("\luaescapestring{\unexpanded{#1}}")))
+        tex.print(tableLength(ipynb.get_cells("\luaescapestring{\unexpanded{#1}}")))
         tex.print("Done")
     }
 }
