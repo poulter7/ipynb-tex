@@ -449,12 +449,16 @@ function ipynb.extract.source(cell)
     return map(cell.source, ipynb.util.sanitize_string)
 end
 
+function ipynb.extract.source_latex(cell)
+    return cell.source
+end
+
 function ipynb.extract.output_text(cell, index)
     return map(cell.outputs[index or 1].text, ipynb.util.sanitize_string)
 end
 
 function ipynb.extract.output_latex(cell, index)
-    return map(cell.outputs[index or 1]['text/latex'], ipynb.util.sanitize_string)
+    return cell.outputs[index or 1]['data']['text/latex']
 end
 
 function ipynb.extract.output_image(cell, index)
@@ -469,19 +473,28 @@ function ipynb.io.print(output)
 end
 
 \end{luacode*}
-\NewDocumentEnvironment{customminted}{m m}{\begin{minted}{#1} #2}{\end{minted}}
-\ProvideDocumentCommand{\ipynbsource}{m m}{
+\ProvideDocumentCommand{\IpynbSource}{m m}{
   \directlua{
     ipynb.io.print(ipynb.extract.source(ipynb.util.tagged_cell("\luaescapestring{\unexpanded{#1}}", "\luaescapestring{\unexpanded{#2}}")))
   }
 }
-\providecommand{\ipynboutput}[2]{
+\providecommand{\IpynbSourceLatex}[2]{
+  \directlua{
+    ipynb.io.print(ipynb.extract.source_latex(ipynb.util.tagged_cell("\luaescapestring{\unexpanded{#1}}", "\luaescapestring{\unexpanded{#2}}")))
+  }
+}
+\providecommand{\IpynbOutText}[2]{
   \directlua{
     ipynb.io.print(ipynb.extract.output_text(ipynb.util.tagged_cell("\luaescapestring{\unexpanded{#1}}", "\luaescapestring{\unexpanded{#2}}")))
   }
 }
-\providecommand{\ipynbimage}[2]{
-  \includegraphicsembedded[width=4cm]{%
-    iVBORw0KGgoAAAANSUhEUgAAAD8AAAAUBAMAAADIGvgZAAAAMFBMVEX///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAv3aB7AAAAD3RSTlMAIma7zZnddlTvRIkQqzLsm4+cAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAA/UlEQVQoFWNgYFRgwAkUQTLC2KUZQ40fMPAKACUdgbjzAIaqswzcvxh4HBgYmAIYeK7ex1Rwh4FhJgPDdgYGNpAp9ZgKpjEw3H/AcJKBQQwoj02B/wGQApYFDKU4FACF8w8wcAcwGOFUwPUb6EIHhgycCtguMDBwJDDMwqkgFCjD9wG3AvYAiAKcVrQyMAowcCXgdCRfAAO7AAOTA8NWoEGgcOD5AmIggNjurdcYGFg3MCwDisXO91VgSDuAkAWy/P///8bAwPIAEtQgKQ5QmKMDYDgDIwsCuNElQXxgZDEYQiWOQ2lkChTd8ASjgCwDZTODrGVUABI4ADDJAQDHYDhFZZqARwAAAABJRU5ErkJggg==
+\providecommand{\IpynbOutLatex}[2]{
+  \directlua{
+    ipynb.io.print(ipynb.extract.output_latex(ipynb.util.tagged_cell("\luaescapestring{\unexpanded{#1}}", "\luaescapestring{\unexpanded{#2}}")))
+  }
+}
+\providecommand{\IpynbOutImage}[2]{
+  \directlua{
+    tex.print(ipynb.extract.output_image(ipynb.util.tagged_cell("\luaescapestring{\unexpanded{#1}}", "\luaescapestring{\unexpanded{#2}}")))
   }
 }

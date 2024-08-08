@@ -3,6 +3,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
+\usepackage{fancyvrb}
 \pagenumbering{gobble}
 
 \begin{document}
@@ -22,60 +23,64 @@ Usage is as follows:
     % extract cells from the document
     \begin{document}
         % include specific tagged source cells
-        \ipynbsource{notebook.ipynb}{tag1}
+        \IpynbSource{notebook.ipynb}{tag1}
 
         % include the output from a cell
-        \ipynboutput{notebook.ipynb}{tag2}
+        \IpynbOutText{notebook.ipynb}{tag2}
 
         % include the image from a cell
-        \ipynbimage{notebook.ipynb}{graph}
+        \IpynbImageB64{notebook.ipynb}{graph}
     \end{document}
 \end{verbatim}
 
 \clearpage
 \section*{Examples}
-\noindent Include a graph
-\begin{verbatim}
-    \ipynbimage{notebook.ipynb}{graph}
-\end{verbatim}
-\ipynbimage{notebook.ipynb}{graph}
 
-\noindent Include the source of a cell
-\begin{verbatim}
-\begin{minted}{python}
-    \ipynbsource{notebook.ipynb}{tag1}
-\end{minted}
-\end{verbatim}
+\subsection*{Source Code}
+Include the source of a code cell:
+\begin{Verbatim}
 \begin{minted}[breaklines, escapeinside=||]{python}
-    |\ipynbsource{notebook.ipynb}{tag1}|
+    |\IpynbSource{notebook.ipynb}{tag1}|
 \end{minted}
+\end{Verbatim}
+\begin{minted}[breaklines, escapeinside=||]{python}
+    |\IpynbSource{notebook.ipynb}{tag1}|
+\end{minted}
+Source can include \TeX code
+\begin{Verbatim}
+\IpynbSource{notebook.ipynb}{equation}
+\end{Verbatim}
+\IpynbSource{notebook.ipynb}{equation}
 
-\noindent Include the output of a cell
+\subsection*{Cell Output}
+Include the output of a cell
+\begin{Verbatim}
+\IpynbOutText{notebook.ipynb}{tag1}
+\end{Verbatim}
+\IpynbOutText{notebook.ipynb}{tag1}
+
+\noindent Include the output of a cell with \TeX in it
+\begin{Verbatim}
+\IpynbOutLatex{notebook.ipynb}{tag3}
+\end{Verbatim}
+\IpynbOutLatex{notebook.ipynb}{tag3}
+
+\noindent [In progress] Handle sympy
 \begin{verbatim}
-\ipynboutput{notebook.ipynb}{tag1}
+\IpynbSource{notebook.ipynb}{sympy}
+$$\ipynboutput{notebook.ipynb}{sympy}$$
 \end{verbatim}
-\ipynboutput{notebook.ipynb}{tag1}
+%\IpynbSourceLatex{notebook.ipynb}{sympy}
 
-\noindent Include the source and output of a cell at the same time
-
-\begin{verbatim}
-\ipynb{notebook.ipynb}{tag2}
-\end{verbatim}
-\ipynb{notebook.ipynb}{tag2}
-\noindent Source from the cell from a notebook, will work even if has \TeX in it
-\begin{verbatim}
-\ipynbsource{notebook.ipynb}{tag2}
-\end{verbatim}
-\ipynbsource{notebook.ipynb}{equation}
-
-\noindent Include \TeX output, such as that from sympy. \verb|ipynb-tex| can't automatically handle sympy objects at this time
-\begin{verbatim}
-\ipynbsource{notebook.ipynb}{sympy}
-$$\ipynbrawoutput{notebook.ipynb}{sympy}$$
-\end{verbatim}
-% \ipynbsource{notebook.ipynb}{sympy}
-% $$\ipynbrawoutput{notebook.ipynb}{sympy}$$
-
-
+\subsection*{Images} 
+Include an image
+\begin{Verbatim}
+\includegraphicsembedded[width=0.5\pagewidth]{%
+    \IpynbOutImage{notebook.ipynb}{graph}
+}
+\end{Verbatim}
+\includegraphicsembedded[width=0.5\pagewidth]{%
+    \IpynbOutImage{notebook.ipynb}{graph}
+}
 
 \end{document}
