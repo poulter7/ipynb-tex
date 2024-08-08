@@ -42,9 +42,13 @@ Usage is as follows:
 
 \noindent Include the source of a cell
 \begin{verbatim}
-\ipynbsource{notebook.ipynb}{tag1}
+\begin{minted}{python}
+    \ipynbsource{notebook.ipynb}{tag1}
+\end{minted}
 \end{verbatim}
-\ipynbsource{notebook.ipynb}{tag1}
+\begin{minted}[escapeinside=||]{python}
+    |\ipynbsource{notebook.ipynb}{tag1}|
+\end{minted}
 
 \noindent Include the output of a cell
 \begin{verbatim}
@@ -69,8 +73,8 @@ Usage is as follows:
 \ipynbsource{notebook.ipynb}{sympy}
 $$\ipynbrawoutput{notebook.ipynb}{sympy}$$
 \end{verbatim}
-\ipynbsource{notebook.ipynb}{sympy}
-$$\ipynbrawoutput{notebook.ipynb}{sympy}$$
+% \ipynbsource{notebook.ipynb}{sympy}
+% $$\ipynbrawoutput{notebook.ipynb}{sympy}$$
 
 
 

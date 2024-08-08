@@ -4,6 +4,7 @@
 \RequirePackage{filecontents}
 \RequirePackage{graphicx}
 \RequirePackage{minted}
+\RequirePackage{xparse}
 \begin{filecontents*}{ipynb.lua}
 --
 -- json.lua
@@ -393,7 +394,7 @@ end
 
 ipynb = {}
 ipynb.loaded = {}
-ipynb.extract_outputs = {}
+ipynb.extract = {}
 
 function ipynb.parse(file)
     local handler = io.open(file, "rb")
@@ -424,12 +425,20 @@ function ipynb.get_tagged_cell(file, tag)
     end
 end
 
-function ipynb.extract_outputs.stream(cell)
+function ipynb.extract.output_stream(cell)
     local output = cell.outputs[1]
     if output ~= nil then
         return table.concat(output.text, "\n")
     end
 end
+
+function ipynb.extract.source(cell)
+    local output = cell.source
+    if output ~= nil then
+        return table.concat(output.text, "\n")
+    end
+end
+
 
 function tableLength(t)
     local count = 0
@@ -439,38 +448,41 @@ end
 
 return ipynb
 \end{filecontents*}
-\providecommand{\ipynbsource}[2]{
-    % not using \inputpygments because 
-    % (1) I can't get it to refresh cells
-    % (2) The way I have it set up it needs two runs of pythontex
-    % Let's play to the package strengths, pythontex to run code, minted to format
-    \ipynbinclude{#1}
-    \IfFileExists{./.cells/#1/#2.source}{
-        \inputminted{python}{./.cells/#1/#2.source}
-    }{}
+\NewDocumentEnvironment{customminted}{m m}{\begin{minted}{#1} #2}{\end{minted}}
+\ProvideDocumentCommand{\ipynbsource}{m m}{
+  \directlua{
+    tex.print(ipynb.extract.output_stream(ipynb.get_tagged_cell("\luaescapestring{\unexpanded{#1}}", "\luaescapestring{\unexpanded{#2}}")))
+  }
+}
+\ProvideDocumentCommand{\ipynbmintsource}{m}{
+    \mintinline{python}{#1}
 }
 \providecommand{\ipynbrawsource}[2]{
-    \ipynbinclude{#1}
-    \IfFileExists{./.cells/#1/#2.source}{\input{./.cells/#1/#2.source}}{./.cells/#1/#2.source}
+    % \ipynbinclude{#1}
+    % \IfFileExists{./.cells/#1/#2.source}{\input{./.cells/#1/#2.source}}{./.cells/#1/#2.source}
+  1
 }
 \providecommand{\ipynboutput}[2]{
-    \ipynbinclude{#1}
-    \IfFileExists{./.cells/#1/#2.output}{
-        \inputminted{python}{./.cells/#1/#2.output}
-    }{}
+    % \ipynbinclude{#1}
+    % \IfFileExists{./.cells/#1/#2.output}{
+    %     \inputminted{python}{./.cells/#1/#2.output}
+    % }{}
+  1
 }
 \providecommand{\ipynbimage}[2]{
-    \ipynbinclude{#1}
-    \IfFileExists{./.cells/#1/#2.png}{\includegraphics[width=\linewidth]{./.cells/#1/#2.png}}{./.cells/#1/#2.png}
+    % \ipynbinclude{#1}
+    % \IfFileExists{./.cells/#1/#2.png}{\includegraphics[width=\linewidth]{./.cells/#1/#2.png}}{./.cells/#1/#2.png}
+  1
     
 }
 \providecommand{\ipynbtex}[2]{
-    \ipynbinclude{#1}
-    \IfFileExists{./.cells/#1/#2.tex}{\input{./.cells/#1/#2.tex}}{./.cells/#1/#2.tex}
+    % \ipynbinclude{#1}
+    % \IfFileExists{./.cells/#1/#2.tex}{\input{./.cells/#1/#2.tex}}{./.cells/#1/#2.tex}
+  1
 }
 \providecommand{\ipynbrawoutput}[2]{
-    \ipynbinclude{#1}
-    \IfFileExists{./.cells/#1/#2.output}{\input{./.cells/#1/#2.output}}{./.cells/#1/#2.output}
+    % \ipynbinclude{#1}
+    % \IfFileExists{./.cells/#1/#2.output}{\input{./.cells/#1/#2.output}}{./.cells/#1/#2.output}
 }
 % \providecommand{\ipynbsourceinline}[2]{
 %    \mintinline{python}{./.cells/#1/#2.source}
@@ -479,15 +491,13 @@ return ipynb
 %    \mintinline{python}{./.cells/#1/#2.output}
 % }
 \providecommand{\ipynb}[2]{
-    \ipynbsource{#1}{#2}
-    \ipynboutput{#1}{#2}
+    % \ipynbsource{#1}{#2}
+    % \ipynboutput{#1}{#2}
 }
 \directlua{dofile "ipynb.lua"}
 
 \providecommand{\ipynbinclude}[1]{
-    \directlua{
-        tex.print(ipynb.extract_outputs.stream(ipynb.get_tagged_cell("\luaescapestring{\unexpanded{#1}}", "tag1")))
-        tex.print(tableLength(ipynb.get_cells("\luaescapestring{\unexpanded{#1}}")))
-        tex.print("Done")
+    \directlua {
+      tex.print("\mintedinline 1")
     }
 }
