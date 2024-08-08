@@ -4,46 +4,54 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{fancyvrb}
+\usepackage{hyperref}
 \pagenumbering{gobble}
+\def\projectname{ipynb-tex}
+\newenvironment{example}
+  {\VerbatimEnvironment
+   \begin{VerbatimOut}[gobble=3]{example.out}}
+  {\end{VerbatimOut}%
+   \vspace{1ex}%
+   \setlength{\parindent}{0pt}%
+   \fbox{\begin{minipage}{0.5\linewidth}%
+     \inputminted[resetmargins]{latex}{example.out}%
+   \end{minipage}%
+   \hspace{0.05\linewidth}%
+   \begin{minipage}{0.45\linewidth-2\fboxsep}%
+     \input{example.out}%
+   \end{minipage}%
+   \vspace{1ex}}}
 
 \begin{document}
 \noindent Jupyter notebook's pdf export feature is not as rich as necessary in some cases, particularly with regards to maths exports etc. however it is common to want to include notebook source and output into a LaTeX document.
 
 In that case working from LaTeX and importing individual notebook cells is most effective and provides the nicest resulting document. To that end \verb|ipynb-tex| provides new TeX commands to include cells directly from notebooks.
 
-\section*{Compiling}
-As this extension makes use of the Python\TeX extension written by Geoffrey M. Poore the necessary compilation approach is the same.
+\section{Command Examples}
 
-Usage is as follows:
-\begin{verbatim}
-    \documentclass{document}
-    % include the package
-    \usepackage{ipynb-tex}
+\subsection{Markdown Content}
+Simple markdown content can be included directly in the document:
+\begin{center}
+    \mintinline{tex}{\IpynbSource{notebook.ipynb}{intro}}\vspace{1em}
+    \fbox{
+        \IpynbSource{notebook.ipynb}{intro}
+    }
+\end{center}
 
-    % extract cells from the document
-    \begin{document}
-        % include specific tagged source cells
-        \IpynbSource{notebook.ipynb}{tag1}
-
-        % include the output from a cell
-        \IpynbOutText{notebook.ipynb}{tag2}
-
-        % include the image from a cell
-        \IpynbImageB64{notebook.ipynb}{graph}
-    \end{document}
-\end{verbatim}
-
-\clearpage
-\section*{Examples}
-
-\subsection*{Source Code}
-Include the source of a code cell:
-\begin{Verbatim}
-\begin{minted}[breaklines, escapeinside=||]{python}
+\subsection{Source Code}
+The source code cell can be exported directly in :
+\begin{minted}{tex}
+\begin{ minted }[
+    breaklines, 
+    escapeinside=||
+]{python}
     |\IpynbSource{notebook.ipynb}{tag1}|
+\end{ minted }
 \end{minted}
-\end{Verbatim}
-\begin{minted}[breaklines, escapeinside=||]{python}
+\begin{minted}[
+    breaklines, 
+    escapeinside=||
+]{python}
     |\IpynbSource{notebook.ipynb}{tag1}|
 \end{minted}
 Source can include \TeX code
@@ -72,15 +80,16 @@ $$\ipynboutput{notebook.ipynb}{sympy}$$
 \end{verbatim}
 %\IpynbSourceLatex{notebook.ipynb}{sympy}
 
-\subsection*{Images} 
-Include an image
+\subsection{Images} 
+Include an image, technically \projectname only outputs a base-64 encoded image, but it can be included, by using Christian Sachs' \href{https://ctan.org/tex-archive/macros/luatex/latex/luaimageembed?lang=en}{luaimageembed} package.
 \begin{Verbatim}
-\includegraphicsembedded[width=0.5\pagewidth]{%
+\includegraphicsembedded[width=0.5\pagewidth]{
     \IpynbOutImage{notebook.ipynb}{graph}
 }
 \end{Verbatim}
-\includegraphicsembedded[width=0.5\pagewidth]{%
+\begin{center}
+\includegraphicsembedded[width=0.5\pagewidth]{
     \IpynbOutImage{notebook.ipynb}{graph}
 }
-
+\end{center}
 \end{document}
