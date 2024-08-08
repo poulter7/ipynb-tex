@@ -5,7 +5,8 @@
 \RequirePackage{graphicx}
 \RequirePackage{minted}
 \RequirePackage{xparse}
-\begin{filecontents*}{ipynb.lua}
+\RequirePackage{luacode}
+\begin{luacode*}
 --
 -- json.lua
 --
@@ -392,6 +393,8 @@ function json.decode(str)
   return res
 end
 
+\end{luacode*}
+\begin{luacode*}
 ipynb = {}
 ipynb.loaded = {}
 ipynb.extract = {}
@@ -447,7 +450,7 @@ function tableLength(t)
 end
 
 return ipynb
-\end{filecontents*}
+\end{luacode*}
 \NewDocumentEnvironment{customminted}{m m}{\begin{minted}{#1} #2}{\end{minted}}
 \ProvideDocumentCommand{\ipynbsource}{m m}{
   \directlua{
@@ -494,7 +497,6 @@ return ipynb
     % \ipynbsource{#1}{#2}
     % \ipynboutput{#1}{#2}
 }
-\directlua{dofile "ipynb.lua"}
 
 \providecommand{\ipynbinclude}[1]{
     \directlua {
