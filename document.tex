@@ -49,7 +49,6 @@ Usage is as follows:
 \begin{minted}[breaklines, escapeinside=||]{python}
     |\ipynbsource{notebook.ipynb}{tag1}|
 \end{minted}
-\ipynbsource{notebook.ipynb}{tag1}
 
 \noindent Include the output of a cell
 \begin{verbatim}
@@ -63,11 +62,11 @@ Usage is as follows:
 \ipynb{notebook.ipynb}{tag2}
 \end{verbatim}
 \ipynb{notebook.ipynb}{tag2}
-\noindent Include the source of a cell from a notebook, even if has \TeX in it, using the raw variant of the source and output commands.
+\noindent Source from the cell from a notebook, will work even if has \TeX in it
 \begin{verbatim}
-\ipynbrawsource{notebook.ipynb}{tag2}
+\ipynbsource{notebook.ipynb}{tag2}
 \end{verbatim}
-\ipynbrawsource{notebook.ipynb}{equation}
+\ipynbsource{notebook.ipynb}{equation}
 
 \noindent Include \TeX output, such as that from sympy. \verb|ipynb-tex| can't automatically handle sympy objects at this time
 \begin{verbatim}
