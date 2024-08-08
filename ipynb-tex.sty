@@ -437,9 +437,13 @@ end
 
 function ipynb.extract.source(cell)
     local output = cell.source
+    tex.print("")
     if output ~= nil then
-        return table.concat(output.text, "\n")
+        for i,c in ipairs(output) do
+          tex.print(c:gsub(" ", "\\ "):gsub("\n", ""), " ")
+        end
     end
+    return ""
 end
 
 
@@ -454,7 +458,7 @@ return ipynb
 \NewDocumentEnvironment{customminted}{m m}{\begin{minted}{#1} #2}{\end{minted}}
 \ProvideDocumentCommand{\ipynbsource}{m m}{
   \directlua{
-    tex.print(ipynb.extract.output_stream(ipynb.get_tagged_cell("\luaescapestring{\unexpanded{#1}}", "\luaescapestring{\unexpanded{#2}}")))
+    ipynb.extract.source(ipynb.get_tagged_cell("\luaescapestring{\unexpanded{#1}}", "\luaescapestring{\unexpanded{#2}}"))
   }
 }
 \ProvideDocumentCommand{\ipynbmintsource}{m}{
