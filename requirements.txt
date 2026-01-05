@@ -1,0 +1,5 @@
+# Requirements for running the example notebook
+jupyter>=1.0.0
+notebook>=6.0.0
+matplotlib>=3.0.0
+numpy>=1.18.0

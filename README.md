@@ -1,9 +1,11 @@
 # ipynb-tex.sty
-ipynb-tex is a simple style sheet which allows you to extract tagged cells out of a Jupyter notebook and include them in a TeX document
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/poulter7/ipynb-tex.svg)](https://github.com/poulter7/ipynb-tex/stargazers)
 
-![overview](doc/overview.png)
-Rather than save output or copies of source code to insert into TeX docs, ipynb-tex always inserts the latest cells from your notebooks directly into TeX files.
+ipynb-tex is a simple LaTeX style package which allows you to extract tagged cells from Jupyter notebooks and include them directly in LaTeX documents.
+
+Rather than save output or copies of source code to insert into TeX documents, ipynb-tex always inserts the latest cells from your notebooks directly into TeX files, ensuring your documentation stays synchronized with your code.
 
 ### Installation
 In your main document directory, just make a symlink to the ipynb-tex.sty file.
@@ -12,48 +14,79 @@ In your main document directory, just make a symlink to the ipynb-tex.sty file.
 
 ### Include cells in your .tex document
 
-| Command                           | Description                                                                                                                 |
-|--------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
-| `\ipynbsource{notebook}[tag]` | Include the source from all cells sharing the tag "example".                                                                |
-| `\ipynboutput{notebook}[tag]` | Include the output from all cells sharing the tag "example".                                                                |
-| `\ipynb{notebook}[tag]`       | Include the source and output from all cells sharing the tag "example".                                                     |
-| `\ipynbimage{notebook}[tag]` | Include an image |
-| `\ipynbtex{notebook}[tag]` | Include raw TeX output |
+The following commands are available to extract content from tagged notebook cells:
+
+| Command | Description |
+|---------|-------------|
+| `\IpynbSource{notebook.ipynb}{tag}` | Include the source code from cells with the specified tag |
+| `\IpynbSourceLatex{notebook.ipynb}{tag}` | Include the source as LaTeX (without sanitization) |
+| `\IpynbOutText{notebook.ipynb}{tag}` | Include the text output from cells with the specified tag |
+| `\IpynbOutLatex{notebook.ipynb}{tag}` | Include LaTeX-formatted output |
+| `\IpynbOutImage{notebook.ipynb}{tag}` | Include an image output (returns base64-encoded image) |
 
 ### Compile LaTeX
-ipynb-tex uses PythonTeX to execute the cell extraction code. So, just as with PythonTeX, you'll need to execute `pythontex` as part of your document build. Also include --shell-escape to allow external functions to be called correctly.
 
-    pdflatex --shell-escape document.tex    #scan the document, figure out what Python needs to be executed
-    pythontex --rerun=always document       #executes the Python found in the document
-    pdflatex --shell-escape document.tex    #include any valid TeX printed from the Python execution
-    pdflatex --shell-escape document.tex    #ensure any included references are correctly handled
+ipynb-tex uses LuaLaTeX to execute the cell extraction code. You'll need to compile your document with LuaLaTeX and enable shell escape:
+
+```bash
+lualatex --shell-escape document.tex
+```
+
+For documents with references or complex dependencies, you may need multiple passes:
+
+```bash
+lualatex --shell-escape document.tex
+lualatex --shell-escape document.tex
+```
 
 
 ### Tagging cells in a notebook
 
-Toggle the toolbar UI
+In Jupyter Notebook or JupyterLab, you can add tags to cells:
 
-![toggle toolbar ui](doc/toggle_tag_toolbar.png)
+1. **In Jupyter Notebook**: View → Cell Toolbar → Tags
+2. **In JupyterLab**: Show the property inspector in the right sidebar
 
-Tag a cell
+Once the tag interface is visible, you can add custom tags to any cell. These tags are used by ipynb-tex to identify which cells to extract.
 
-![tag a cell](doc/tag_cell.png)
+### Dependencies
 
-### Modifying this plugin
-This repo comes with a ready to go version of `ipynb-tex.sty`, but if you want to make changes and rebuild it just run `./build`, which merges `ipynb-tex-template.sty` and `extract_cells.py` to create `ipynb-tex.sty`.
+To use ipynb-tex, you need:
 
-There are no package dependencies required to run this script, but to execute the sample you'll need to include a set of dependencies.
+- **LuaLaTeX**: The LaTeX engine that executes Lua code
+- **luaimageembed package**: For embedding base64-encoded images (when using `\IpynbOutImage`)
+- **minted package**: For syntax highlighting (optional, for displaying code)
 
-    pip install -r requirements.txt
+The package includes its own JSON parser (json.lua by rxi) embedded in the style file.
 
+### Features
 
-### Running Tests
+- **Direct integration**: Extract cells from Jupyter notebooks without intermediate files
+- **Tag-based selection**: Use tags to select specific cells to include
+- **Multiple output formats**: Support for source code, text output, LaTeX output, and images
+- **Caching**: Notebooks are loaded once and cached for efficient processing
+- **No external dependencies**: Pure Lua implementation with embedded JSON parser
 
-    pip install nose
-    nosetests
+### Limitations & Future Improvements
 
-### Todo 
-- Remove the need to "rerun=always", by registering the [filename].ipynb as a dependency while pythontex is running.
-- Export cells only once, by making an in-memory variable which tags a file as already processed, to avoid repeated work.
-- Add a \ipynbdirectory which serves as the base path for all notebooks, so if you're compiling a doc with lots, no need to keep including the path
+- Currently extracts only the first cell matching a tag
+- Images are returned as base64-encoded strings requiring additional processing
+- No support for extracting multiple cells with the same tag
+
+See the example in `document.tex` for complete usage examples.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+The embedded json.lua library is Copyright (c) 2020 rxi and is also MIT licensed.
+
+## Acknowledgments
+
+- Uses [json.lua](https://github.com/rxi/json.lua) by rxi for JSON parsing
+- Uses [luaimageembed](https://ctan.org/pkg/luaimageembed) by Christian Sachs for base64 image embedding
 

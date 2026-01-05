@@ -1,0 +1,52 @@
+name: LaTeX Compilation Test
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Install TeX Live
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive-latex-extra texlive-luatex texlive-fonts-recommended
+        
+    - name: Install additional LaTeX packages
+      run: |
+        sudo apt-get install -y texlive-extra-utils python3-pygments
+        
+    - name: Verify LuaLaTeX installation
+      run: |
+        lualatex --version
+        
+    - name: Compile example document
+      run: |
+        cd ${{ github.workspace }}
+        lualatex --shell-escape --interaction=nonstopmode document.tex || true
+        lualatex --shell-escape --interaction=nonstopmode document.tex
+        
+    - name: Check if PDF was generated
+      run: |
+        if [ -f document.pdf ]; then
+          echo "✓ PDF generated successfully"
+          ls -lh document.pdf
+        else
+          echo "✗ PDF generation failed"
+          exit 1
+        fi
+        
+    - name: Upload PDF artifact
+      uses: actions/upload-artifact@v4
+      if: success()
+      with:
+        name: compiled-document
+        path: document.pdf
+        retention-days: 30
