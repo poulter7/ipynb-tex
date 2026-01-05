@@ -10,6 +10,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     
+    permissions:
+      contents: read
+    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -30,7 +33,15 @@ jobs:
     - name: Compile example document
       run: |
         cd ${{ github.workspace }}
-        lualatex --shell-escape --interaction=nonstopmode document.tex || true
+        # First pass may fail due to missing references, labels, etc.
+        # We allow it to continue with exit code 0, but check logs
+        lualatex --shell-escape --interaction=nonstopmode document.tex
+        EXIT_CODE=$?
+        if [ $EXIT_CODE -ne 0 ]; then
+          echo "First compilation pass had errors (exit code: $EXIT_CODE)"
+          echo "This is normal - continuing with second pass..."
+        fi
+        # Second pass should succeed
         lualatex --shell-escape --interaction=nonstopmode document.tex
         
     - name: Check if PDF was generated
