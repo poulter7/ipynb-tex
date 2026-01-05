@@ -1,16 +1,63 @@
-.cells/
-.idea/
+# Jupyter Notebook
 .ipynb_checkpoints/
-*.pyc
+*.ipynb_checkpoints
+
+# LaTeX auxiliary files
 *.aux
 *.dvi
 *.log
+*.out
+*.toc
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+*.alg
+*.lof
+*.lot
+*.tpt
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.nav
+*.snm
+*.vrb
+
+# LaTeX specific to this project
+.cells/
 _minted-document/
 pythontex-files*/
-*.err
-*.out
 *.pytxcode
+*.err
 
-*.blg
+# Python
+*.pyc
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
 
-*.bbl
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build outputs
+*.pdf
+!document.pdf
+
+# Temporary files
+*.tmp
+*.bak
+example.out
+
